@@ -27,6 +27,7 @@ import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import "./css/index.css";
 import SnackBar from "../../components/Notification/SnackBar";
+import DeleteConfirmationPopup from "../../components/DeleteConfirmationPopup";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/ReduxHook";
 import { fetchProduct } from "../../actions/product/ProductSlice";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -94,6 +95,7 @@ const rows = [
 export default function DataTable(props: any) {
   const [data, setData] = React.useState<any>(rows);
   const snackBarRef: any = React.useRef();
+  const confirmPopup: any = React.useRef();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const products = useAppSelector((state: any) => state.products);
@@ -131,7 +133,9 @@ export default function DataTable(props: any) {
         <div>
           <Grid container>
             <Grid item xs={10} margin={"15px 15px 0px 15px"}>
-              <Typography variant="subtitle1" gutterBottom>Name</Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Name
+              </Typography>
               <div>
                 <TextField
                   id="outlined-basic"
@@ -143,7 +147,9 @@ export default function DataTable(props: any) {
             </Grid>
 
             <Grid item xs={10} margin={"15px 15px 0px 15px"}>
-              <Typography variant="subtitle1" gutterBottom>Division</Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Division
+              </Typography>
               <div>
                 <TextField
                   id="outlined-basic"
@@ -154,7 +160,9 @@ export default function DataTable(props: any) {
               </div>
             </Grid>
             <Grid item xs={10} margin={"15px 15px 0px 15px"}>
-              <Typography variant="subtitle1" gutterBottom>Status</Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Status
+              </Typography>
               <div>
                 <TextField
                   id="outlined-basic"
@@ -170,7 +178,9 @@ export default function DataTable(props: any) {
             </Grid>
             <Grid item xs={10} margin={"15px 15px 0px 15px"}>
               {/* <div><Typography  variant="caption" display="block" gutterBottom style={{fontSize: '16px', color: 'grey'}}>Product Icon</Typography></div> */}
-              <Typography variant="subtitle1" gutterBottom>File Upload</Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                File Upload
+              </Typography>
               <div>
                 <TextField
                   id="outlined-basic"
@@ -182,7 +192,9 @@ export default function DataTable(props: any) {
               </div>
             </Grid>
             <Grid item xs={10} margin={"15px 15px 0px 15px"}>
-              <Typography variant="subtitle1" gutterBottom>DatePicker</Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                DatePicker
+              </Typography>
               <div>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
@@ -194,7 +206,9 @@ export default function DataTable(props: any) {
             </Grid>
 
             <Grid item xs={10} margin={"15px 15px 0px 15px"}>
-              <Typography variant="subtitle1" gutterBottom>Published By</Typography>
+              <Typography variant="subtitle1" gutterBottom>
+                Published By
+              </Typography>
               <div>
                 <TextField
                   id="outlined-basic"
@@ -205,7 +219,7 @@ export default function DataTable(props: any) {
               </div>
             </Grid>
           </Grid>
-          <Divider style={{margin: '30px 0px'}} />
+          <Divider style={{ margin: "30px 0px" }} />
           <Grid
             container
             justifyContent="center"
@@ -214,10 +228,15 @@ export default function DataTable(props: any) {
           >
             <Grid item>
               <Link href="/data-table">
-                <Button variant="outlined"   style={{
+                <Button
+                  variant="outlined"
+                  style={{
                     border: "1px solid #1b878f",
                     background: "#fff",
-                  }}>Cancel</Button>
+                  }}
+                >
+                  Cancel
+                </Button>
               </Link>
             </Grid>
             <Grid item>
@@ -309,7 +328,11 @@ export default function DataTable(props: any) {
                     <IconButton onClick={() => navigate(`/form?edit=${index}`)}>
                       <EditIcon color="action" />
                     </IconButton>
-                    <IconButton onClick={() => snackBarRef.current.open(true)}>
+                    <IconButton
+                      onClick={() =>
+                        confirmPopup.current.handleClickOpen(true, row.name)
+                      }
+                    >
                       <DeleteIcon color="error" />
                     </IconButton>
                   </TableCell>
@@ -328,6 +351,7 @@ export default function DataTable(props: any) {
         </div>
         <div>
           <SnackBar ref={snackBarRef} />
+          <DeleteConfirmationPopup ref={confirmPopup} />
         </div>
       </div>
     </Box>
