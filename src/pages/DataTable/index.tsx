@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -92,6 +92,8 @@ const rows = [
   ),
 ];
 
+const drawerWidth = 500;
+
 export default function DataTable(props: any) {
   const [data, setData] = React.useState<any>(rows);
   const snackBarRef: any = React.useRef();
@@ -101,10 +103,35 @@ export default function DataTable(props: any) {
   const products = useAppSelector((state: any) => state.products);
   const [openForm, setOpenForm] = React.useState(false);
   const drawerWidth = 500;
+  const [details, setDetails] = useState({
+    name: "",
+    Division: "",
+    status: "",
+    fileUpload: "",
+    DatePicker: "",
+    publishedBy: "",
+  });
 
   useEffect(() => {
     dispatch(fetchProduct());
   }, []);
+
+  const handleSubmit = (e: any) => {
+    console.log(details);
+    setOpenForm(!openForm);
+  };
+
+  const handleDateChange = (e: any) => {
+    setDetails((prev) => {
+      return { ...prev, DatePicker: e };
+    });
+  };
+
+  const handleChange = (e: any) => {
+    setDetails((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
 
   return (
     <Box className="containerBox">
@@ -142,6 +169,8 @@ export default function DataTable(props: any) {
                   placeholder="Name"
                   variant="outlined"
                   fullWidth
+                  name="name"
+                  onChange={handleChange}
                 />
               </div>
             </Grid>
@@ -156,6 +185,8 @@ export default function DataTable(props: any) {
                   placeholder="Division"
                   variant="outlined"
                   fullWidth
+                  name="Division"
+                  onChange={handleChange}
                 />
               </div>
             </Grid>
@@ -170,6 +201,8 @@ export default function DataTable(props: any) {
                   variant="outlined"
                   select
                   fullWidth
+                  name="status"
+                  onChange={handleChange}
                 >
                   <MenuItem value="active">Active</MenuItem>
                   <MenuItem value="Inactive">In Active</MenuItem>
@@ -188,6 +221,8 @@ export default function DataTable(props: any) {
                   variant="outlined"
                   fullWidth
                   type="file"
+                  name="fileUpload"
+                  onChange={handleChange}
                 />
               </div>
             </Grid>
@@ -200,7 +235,10 @@ export default function DataTable(props: any) {
                   dateAdapter={AdapterDayjs}
                   style={{ width: "100%" }}
                 >
-                  <DatePicker />
+                  <DatePicker
+                    value={details.DatePicker}
+                    onChange={handleDateChange}
+                  />
                 </LocalizationProvider>
               </div>
             </Grid>
@@ -215,6 +253,8 @@ export default function DataTable(props: any) {
                   placeholder="Published By"
                   variant="outlined"
                   fullWidth
+                  name="publishedBy"
+                  onChange={handleChange}
                 />
               </div>
             </Grid>
@@ -227,30 +267,28 @@ export default function DataTable(props: any) {
             spacing={2}
           >
             <Grid item>
-              <Link href="/data-table">
-                <Button
-                  variant="outlined"
-                  style={{
-                    border: "1px solid #1b878f",
-                    background: "#fff",
-                  }}
-                >
-                  Cancel
-                </Button>
-              </Link>
+              <Button
+                onClick={() => setOpenForm(!openForm)}
+                variant="outlined"
+                style={{
+                  border: "1px solid #1b878f",
+                  background: "#fff",
+                }}
+              >
+                Cancel
+              </Button>
             </Grid>
             <Grid item>
-              <Link href="/data-table">
-                <Button
-                  variant="contained"
-                  style={{
-                    border: "1px solid #1b878f",
-                    background: "#1b878f",
-                  }}
-                >
-                  Submit
-                </Button>
-              </Link>
+              <Button
+                onClick={handleSubmit}
+                variant="contained"
+                style={{
+                  border: "1px solid #1b878f",
+                  background: "#1b878f",
+                }}
+              >
+                Submit
+              </Button>
             </Grid>
           </Grid>
         </div>
@@ -322,10 +360,10 @@ export default function DataTable(props: any) {
                   <TableCell align="center">{row.published_date}</TableCell>
                   <TableCell align="center">{row.published_by}</TableCell>
                   <TableCell>
-                    <IconButton onClick={() => navigate(`/form?view`)}>
+                    <IconButton onClick={() => setOpenForm(!openForm)}>
                       <VisibilityIcon color="warning" />
                     </IconButton>
-                    <IconButton onClick={() => navigate(`/form?edit=${index}`)}>
+                    <IconButton onClick={() => setOpenForm(!openForm)}>
                       <EditIcon color="action" />
                     </IconButton>
                     <IconButton
