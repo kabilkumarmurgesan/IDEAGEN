@@ -1,0 +1,61 @@
+.manage-tenant-main-layout {
+  margin: auto 150px;
+  /* width: 100%; */
+}
+.manage-tenant-body {
+  width: 80%;
+  margin: 50px auto;
+}
+.manage-tenant-edit-block {
+  display: flex;
+  justify-content: end;
+}
+.manage-tenant-edit-btn {
+  }
+.manage-tenant-card {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15), 0px 1px 8px rgba(0, 0, 0, 0.1),
+    0px 0px 6px rgba(0, 0, 0, 0.02);
+  margin: 25px 0px;
+}
+.manage-tenant-card-body1 {
+    padding: 5px 0px;
+}
+.manage-tenant-card-caption {
+    margin: 10px;  
+}
+.manage-tenant-card-list-block {
+    margin-top: 10px;
+}
+.manage-tenant-card-list-caption {
+    margin-left: 25px !important;
+}
+.manage-tenant-card-list-text {
+    margin-left: 10px;
+}
+.manage-tenant-text-block {
+    display: flex;
+}
+.manage-tenant-migrate-btn-block {
+    margin: 0px 20px;
+}
+.manage-tenant-migrate-btn {
+
+}
+.manage-tenant-last-seen {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.manage-tenant-view-summary {
+    margin: 0px 35px;
+}
+
+/* New */
+
+.css-ok4df9 {
+  width: 100% !important;
+  padding: 1px 1px 1px 8px !important;
+  margin: 0px !important;
+}
